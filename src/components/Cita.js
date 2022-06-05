@@ -1,7 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const Cita = ({ cita, eliminarCita }) => {
+const Cita = ({ cita, eliminarCita,setEditCita }) => {
+    console.log(cita)
   return (
     <div className="cita">
       <img alt="perfil" src={cita.img}></img>
@@ -23,6 +24,12 @@ const Cita = ({ cita, eliminarCita }) => {
       <p>
         Sintomas: <span>{cita.sintomasCliente}</span>
       </p>
+      <button
+        className="button eliminar u-full-width"
+        onClick={() => setEditCita(cita)}
+      >
+        Editar
+      </button>
 
       <button
         className="button eliminar u-full-width"
@@ -30,9 +37,10 @@ const Cita = ({ cita, eliminarCita }) => {
       >
         Eliminar
       </button>
+      
     </div>
   );
-  console.log(Cita.mascota);
+
 };
 
 Cita.propTypes = {

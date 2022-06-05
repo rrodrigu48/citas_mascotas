@@ -2,7 +2,7 @@ import React, { Fragment, useState, useEffect } from "react";
 import axios from "axios";
 import { Agregar, leerTodo } from "../utils/fun";
 
-const Formulario = ({ crearCita }) => {
+const Formulario = ({citas,guardarCitas,setEditCita,editCita }) => {
   //Consumiendo API
   const [selectMascotas, setMascotas] = useState([]);
   const getNewsList = async () => {
@@ -25,23 +25,30 @@ const Formulario = ({ crearCita }) => {
     getNewsList();
   }, []);
   //Crear State de citas
-  const [citas, actualizarCita] = useState([{
+  
+    const [cita, setCita] = useState({
     mascota: "",
     raza: "",
     propietario: "",
     fecha: "",
     hora: "",
     sintomas: "",
-  }]);
+    url_imagen: ""
+  });
   const [error, actualizarError] = useState(false);
+  const resetForm = ()=>{
+    setCita({ 
+    mascota: "",
+    raza: "",
+    propietario: "",
+    fecha: "",
+    hora: "",
+    sintomas: "",
+  })
+  }
 
   //Funcion que se ejecuta cada que el usuario escriba en un input
-  const actualizarState = (e) => {
-    actualizarCita({
-      ...citas,
-      [e.target.name]: e.target.value,
-    });
-  };
+  
   //////
  /*  useEffect(() => {
     const obtenerDatos = async () => {
@@ -60,15 +67,7 @@ const Formulario = ({ crearCita }) => {
     };
     obtenerDatos();
   }); */
-  const [cliente, setCliente] = useState({
-    mascota: "",
-    raza: "",
-    propietario: "",
-    fecha: "",
-    hora: "",
-    sintomas: "",
-    url_imagen: ""
-  });
+
 
   //Extraer los valores
   //const { mascota, raza, propietario, fecha, hora, sintomas,url_imagen } = citas;
@@ -90,15 +89,15 @@ const Formulario = ({ crearCita }) => {
     } */
     try {
       Agregar({
-        mascotaCliente: cliente.mascota,
-        razaCliente: cliente.raza,
-        img:cliente.url_imagen,
-        propietarioCliente: cliente.propietario,
-        fechaCliente: cliente.fecha,
-        horaCliente: cliente.hora,
-        sintomasCliente: cliente.sintomas,
+        mascotaCliente: cita.mascota,
+        razaCliente: cita.raza,
+        img:cita.url_imagen,
+        propietarioCliente: cita.propietario,
+        fechaCliente: cita.fecha,
+        horaCliente: cita.hora,
+        sintomasCliente: cita.sintomas,
       });
-   
+      resetForm()
       
     } catch (error) {
       console.log(error);
@@ -112,10 +111,10 @@ const Formulario = ({ crearCita }) => {
 
     //asignar foto a card
     await axios
-      .get(`https://dog.ceo/api/breed/${cliente.raza}/images/random`)
+      .get(`https://dog.ceo/api/breed/${cita.raza}/images/random`)
       .then((response) => {
         if (response.status === 200) {
-          cliente.url_imagen = response.data.message;
+          cita.url_imagen = response.data.message;
         }
       }); 
 
@@ -139,15 +138,15 @@ const Formulario = ({ crearCita }) => {
           name="mascota"
           className="u-full-width"
           placeholder="Nombre Mascota"
-          onChange={(e) => setCliente({ ...cliente, mascota: e.target.value })}
-          value={cliente.mascota}
+          onChange={(e) => setCita({ ...cita, mascota: e.target.value })}
+          value={cita.mascota}
         />
         <label>Raza Mascota</label>
         <select
           name="raza"
           className="u-full-width "
-          onChange={(e) => setCliente({ ...cliente, raza: e.target.value })}
-          value={cliente.raza}
+          onChange={(e) => setCita({ ...cita, raza: e.target.value })}
+          value={cita.raza}
         >
           <option>Seleccione la Raza</option>
           {selectMascotas.map((item, index) => {
@@ -166,9 +165,9 @@ const Formulario = ({ crearCita }) => {
           className="u-full-width"
           placeholder="Nombre Dueño de la mascota"
           onChange={(e) =>
-            setCliente({ ...cliente, propietario: e.target.value })
+            setCita({ ...cita, propietario: e.target.value })
           }
-          value={cliente.propietario}
+          value={cita.propietario}
         />
 
         <label>Fecha</label>
@@ -176,8 +175,8 @@ const Formulario = ({ crearCita }) => {
           type="date"
           name="fecha"
           className="u-full-width"
-          onChange={(e) => setCliente({ ...cliente, fecha: e.target.value })}
-          value={cliente.fecha}
+          onChange={(e) => setCita({ ...cita, fecha: e.target.value })}
+          value={cita.fecha}
         />
 
         <label>Hora</label>
@@ -185,16 +184,16 @@ const Formulario = ({ crearCita }) => {
           type="time"
           name="hora"
           className="u-full-width"
-          onChange={(e) => setCliente({ ...cliente, hora: e.target.value })}
-          value={cliente.hora}
+          onChange={(e) => setCita({ ...cita, hora: e.target.value })}
+          value={cita.hora}
         />
 
         <label>Síntomas</label>
         <textarea
           className="u-full-width"
           name="sintomas"
-          onChange={(e) => setCliente({ ...cliente, sintomas: e.target.value })}
-          value={cliente.sintomas}
+          onChange={(e) => setCita({ ...cita, sintomas: e.target.value })}
+          value={cita.sintomas}
         ></textarea>
 
         <button type="submit" className="u-full-width button-primary">
