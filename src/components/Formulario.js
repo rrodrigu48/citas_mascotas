@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useEffect } from "react";
 import axios from "axios";
-import { Agregar, editar, leerTodo } from "../utils/fun";
+import { Agregar, editar } from "../utils/fun";
 
 const Formulario = ({ citas, guardarCitas, setEditCita, editCita }) => {
   const [cita, setCita] = useState({
@@ -12,7 +12,7 @@ const Formulario = ({ citas, guardarCitas, setEditCita, editCita }) => {
     sintomas: "",
     url_imagen: "",
   });
-  const [error, actualizarError] = useState(false);
+  const [error] = useState(false);
   const resetForm = () => {
     setCita({
       mascota: "",

@@ -7,15 +7,17 @@ import {
   doc,
   updateDoc,
 } from "firebase/firestore";
-import { async } from "@firebase/util";
+
 
 export const Agregar = async (data) => {
   try {
     const dataRef = await addDoc(collection(db, "mascotas"), data);
+    console.log(dataRef)
   } catch (error) {
     console.log(error);
   }
 };
+
 
 export const leerTodo = async () => {
   const data = [];
@@ -29,6 +31,7 @@ export const leerTodo = async () => {
 export const eliminar = async (id, guardarCitas, citas) => {
   try {
     const newdata = await deleteDoc(doc(db, "mascotas", id));
+    console.log(newdata)
     //await db.collection(db, "mascotas").doc(id).delete();
     const nuevasCitas = citas.filter((cita) => cita.id !== id);
     guardarCitas(nuevasCitas);
