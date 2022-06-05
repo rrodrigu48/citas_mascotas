@@ -9,20 +9,20 @@ function App() {
   //Arreglo de las citas
   const [citas, guardarCitas] = useState([]);
 
-useEffect (()=>{
-  (async () => {  
-    const data = await leerTodo();
-    console.log(data);
-    guardarCitas(data)
-  })();
-},[])
+  useEffect(() => {
+    (async () => {
+      const data = await leerTodo();
+      console.log(data);
+      guardarCitas(data);
+    })();
+  }, []);
 
   //Mensaje condicional
   const titulo = citas.length === 0 ? "No hay citas" : "Administra tus citas";
 
   //Obtener la fecha actualizada.
   const fecha = new Date().getFullYear();
-  console.log(citas);
+
   return (
     <Fragment>
       <h1>Administrador de Pacientes</h1>
@@ -34,10 +34,11 @@ useEffect (()=>{
           <div className="one-half column">
             <h2>{titulo}</h2>
             <div className="scrollView">
-              {citas.map((cita) => (
-                <Cita key={cita.id} cita={cita} />
-              ))}
-            </div>
+
+            {citas.map((cita) => (
+               <Cita key={cita.id} cita={cita}/>
+               ))}
+               </div>
           </div>
         </div>
       </div>

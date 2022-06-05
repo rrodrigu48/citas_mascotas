@@ -57,9 +57,11 @@ input[type="time"] {
 
 .cita {
   padding: 2rem;
+  margin-bottom: 2rem;
   background: white;
-  border-bottom: 1px solid #e1e1e1;
+  border: 1px solid #e1e1e1;
   color: black;
+  border-radius: 50px;
 }
 
 .cita p {
@@ -77,14 +79,7 @@ input[type="time"] {
   right: 100px;
   border-radius: 50px;
 }
-.cita:first-of-type {
-  border-top-left-radius: 1rem;
-  border-top-right-radius: 1rem;
-}
-.cita:last-of-type {
-  border-bottom-left-radius: 1rem;
-  border-bottom-right-radius: 1rem;
-}
+
 
 .button.eliminar,
 .button.eliminar:hover {
@@ -103,10 +98,10 @@ input[type="time"] {
   font-family:  'Staatliches', cursive;
 }
 .scrollView{ 
-  max-width: 400px;
-  max-height: 310px;
+ 
+  max-height: 700px;
   overflow-y: auto;
-  border-radius: 50px;
+  
 }
 select{
   border-radius: 50px;

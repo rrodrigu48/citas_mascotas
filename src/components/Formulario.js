@@ -67,10 +67,11 @@ const Formulario = ({ crearCita }) => {
     fecha: "",
     hora: "",
     sintomas: "",
+    url_imagen: ""
   });
 
   //Extraer los valores
-  const { mascota, raza, propietario, fecha, hora, sintomas } = citas;
+  //const { mascota, raza, propietario, fecha, hora, sintomas,url_imagen } = citas;
 
   //Cuando el usuario presiona el boton
   const submitCita = async (e) => {
@@ -91,6 +92,7 @@ const Formulario = ({ crearCita }) => {
       Agregar({
         mascotaCliente: cliente.mascota,
         razaCliente: cliente.raza,
+        img:cliente.url_imagen,
         propietarioCliente: cliente.propietario,
         fechaCliente: cliente.fecha,
         horaCliente: cliente.hora,
@@ -109,13 +111,13 @@ const Formulario = ({ crearCita }) => {
   
 
     //asignar foto a card
-   /*  await axios
-      .get(`https://dog.ceo/api/breed/${raza}/images/random`)
+    await axios
+      .get(`https://dog.ceo/api/breed/${cliente.raza}/images/random`)
       .then((response) => {
         if (response.status === 200) {
-          citas.url_imagen = response.data.message;
+          cliente.url_imagen = response.data.message;
         }
-      }); */
+      }); 
 
    
 

@@ -1,29 +1,43 @@
-import React from 'react'
+import React from "react";
 import PropTypes from "prop-types";
 
-
-const Cita = ({cita, eliminarCita}) => (
-
+const Cita = ({ cita, eliminarCita }) => {
+  return (
     <div className="cita">
-        <img alt="perfil" src={cita.url_imagen}></img>
-        <p>Mascota: <span>{cita.mascota}</span></p>
-        <p>Raza: <span>{cita.raza}</span></p>
-        <p>Propietario: <span>{cita.propietario}</span></p>
-        <p>Fecha: <span>{cita.fecha}</span></p>
-        <p>Hora: <span>{cita.hora}</span></p>
-        <p>Sintomas: <span>{cita.sintomas}</span></p>
+      <img alt="perfil" src={cita.img}></img>
+      <p>
+        Mascota: <span>{cita.mascotaCliente}</span>
+      </p>
+      <p>
+        Raza: <span>{cita.razaCliente}</span>
+      </p>
+      <p>
+        Propietario: <span>{cita.propietarioCliente}</span>
+      </p>
+      <p>
+        Fecha: <span>{cita.fechaCliente}</span>
+      </p>
+      <p>
+        Hora: <span>{cita.horaCliente}</span>
+      </p>
+      <p>
+        Sintomas: <span>{cita.sintomasCliente}</span>
+      </p>
 
-        <button
-            className="button eliminar u-full-width"
-            onClick={ () => eliminarCita(cita.id)}
-        >Eliminar</button>
+      <button
+        className="button eliminar u-full-width"
+        onClick={() => eliminarCita(cita.id)}
+      >
+        Eliminar
+      </button>
     </div>
+  );
+  console.log(Cita.mascota);
+};
 
-)
+Cita.propTypes = {
+  cita: PropTypes.object.isRequired,
+  eliminarCita: PropTypes.func.isRequired,
+};
 
-Cita.propTypes={
-    cita: PropTypes.object.isRequired,
-    eliminarCita: PropTypes.func.isRequired
-}
- 
 export default Cita;
