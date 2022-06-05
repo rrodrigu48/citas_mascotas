@@ -15,7 +15,7 @@ function App() {
       const data = await leerTodo();
       guardarCitas(data);
     })();
-  }, [citas]);
+  }, []);
 
   //Mensaje condicional
   const titulo = citas.length === 0 ? "No hay citas" : "Administra tus citas";

@@ -2,27 +2,27 @@ import React from "react";
 import PropTypes from "prop-types";
 
 const Cita = ({ cita, eliminarCita,setEditCita }) => {
-    console.log(cita)
+   
   return (
     <div className="cita">
       <img alt="perfil" src={cita.img}></img>
       <p>
-        Mascota: <span>{cita.mascotaCliente}</span>
+        Mascota: <span>{cita.mascota}</span>
       </p>
       <p>
-        Raza: <span>{cita.razaCliente}</span>
+        Raza: <span>{cita.raza}</span>
       </p>
       <p>
-        Propietario: <span>{cita.propietarioCliente}</span>
+        Propietario: <span>{cita.propietario}</span>
       </p>
       <p>
-        Fecha: <span>{cita.fechaCliente}</span>
+        Fecha: <span>{cita.fecha}</span>
       </p>
       <p>
-        Hora: <span>{cita.horaCliente}</span>
+        Hora: <span>{cita.hora}</span>
       </p>
       <p>
-        Sintomas: <span>{cita.sintomasCliente}</span>
+        Sintomas: <span>{cita.sintomas}</span>
       </p>
       <button
         className="button eliminar u-full-width"

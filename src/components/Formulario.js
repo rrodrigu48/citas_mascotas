@@ -1,8 +1,29 @@
 import React, { Fragment, useState, useEffect } from "react";
 import axios from "axios";
-import { Agregar, leerTodo } from "../utils/fun";
+import { Agregar, editar, leerTodo } from "../utils/fun";
 
-const Formulario = ({citas,guardarCitas,setEditCita,editCita }) => {
+const Formulario = ({ citas, guardarCitas, setEditCita, editCita }) => {
+  const [cita, setCita] = useState({
+    mascota: "",
+    raza: "",
+    propietario: "",
+    fecha: "",
+    hora: "",
+    sintomas: "",
+    url_imagen: "",
+  });
+  const [error, actualizarError] = useState(false);
+  const resetForm = () => {
+    setCita({
+      mascota: "",
+      raza: "",
+      propietario: "",
+      fecha: "",
+      hora: "",
+      sintomas: "",
+    });
+  };
+
   //Consumiendo API
   const [selectMascotas, setMascotas] = useState([]);
   const getNewsList = async () => {
@@ -21,94 +42,22 @@ const Formulario = ({citas,guardarCitas,setEditCita,editCita }) => {
       }
     });
   };
+
   useEffect(() => {
     getNewsList();
   }, []);
+
+  useEffect(() => {
+    if (editCita.id) {
+      setCita(editCita);
+    }
+  }, [editCita]);
+
   //Crear State de citas
-  
-    const [cita, setCita] = useState({
-    mascota: "",
-    raza: "",
-    propietario: "",
-    fecha: "",
-    hora: "",
-    sintomas: "",
-    url_imagen: ""
-  });
-  const [error, actualizarError] = useState(false);
-  const resetForm = ()=>{
-    setCita({ 
-    mascota: "",
-    raza: "",
-    propietario: "",
-    fecha: "",
-    hora: "",
-    sintomas: "",
-  })
-  }
-
-  //Funcion que se ejecuta cada que el usuario escriba en un input
-  
-  //////
- /*  useEffect(() => {
-    const obtenerDatos = async () => {
-      try {
-        const db = app.firestore();
-        //const data = await db.collection('frutas').get()
-        const data = await db.collection("mascotas").get();
-        const array = data.docs.map((item) => ({
-          id: item.id,
-          ...item.data(),
-        }));
-        setMascotas(array);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    obtenerDatos();
-  }); */
-
-
-  //Extraer los valores
-  //const { mascota, raza, propietario, fecha, hora, sintomas,url_imagen } = citas;
 
   //Cuando el usuario presiona el boton
   const submitCita = async (e) => {
     e.preventDefault();
-
-    //Validar
-  /*   if (
-      mascota.trim() === "" ||
-      propietario.trim() === "" ||
-      raza.trim() === "" ||
-      fecha.trim() === "" ||
-      hora.trim() === "" ||
-      sintomas.trim() === ""
-    ) {
-      console.log("subri un error");
-    } */
-    try {
-      Agregar({
-        mascotaCliente: cita.mascota,
-        razaCliente: cita.raza,
-        img:cita.url_imagen,
-        propietarioCliente: cita.propietario,
-        fechaCliente: cita.fecha,
-        horaCliente: cita.hora,
-        sintomasCliente: cita.sintomas,
-      });
-      resetForm()
-      
-    } catch (error) {
-      console.log(error);
-    }
-
-    // setModoEdicion(false)
-    // setError(null)
-    
-
-  
-
     //asignar foto a card
     await axios
       .get(`https://dog.ceo/api/breed/${cita.raza}/images/random`)
@@ -116,16 +65,38 @@ const Formulario = ({citas,guardarCitas,setEditCita,editCita }) => {
         if (response.status === 200) {
           cita.url_imagen = response.data.message;
         }
-      }); 
+      });
 
-   
+    if (editCita.id) {
+      cita.id = editCita.id;
+      const actualizarpaciente = citas.map((actualizar) =>
+        actualizar.id === cita.id ? cita : actualizar
+      );
+    editar(editCita.id,actualizarpaciente)
+    } else {
+      try {
+        Agregar({
+          mascota: cita.mascota,
+          raza: cita.raza,
+          img: cita.url_imagen,
+          propietario: cita.propietario,
+          fecha: cita.fecha,
+          hora: cita.hora,
+          sintomas: cita.sintomas,
+        });
+        resetForm();
+      } catch (error) {
+        console.log(error);
+      }
+    }
 
-  
+    // setModoEdicion(false)
+    // setError(null)
   };
 
   return (
     <Fragment>
-      <h2>Crear Cita</h2>
+      <h2>{editCita.id ? "Editar Paciente" : "Crear Paciente"}</h2>
 
       {error ? (
         <p className="alerta-error">Todos los campos son obligatorios</p>
@@ -164,9 +135,7 @@ const Formulario = ({citas,guardarCitas,setEditCita,editCita }) => {
           name="propietario"
           className="u-full-width"
           placeholder="Nombre Dueño de la mascota"
-          onChange={(e) =>
-            setCita({ ...cita, propietario: e.target.value })
-          }
+          onChange={(e) => setCita({ ...cita, propietario: e.target.value })}
           value={cita.propietario}
         />
 
@@ -197,7 +166,7 @@ const Formulario = ({citas,guardarCitas,setEditCita,editCita }) => {
         ></textarea>
 
         <button type="submit" className="u-full-width button-primary">
-          Agregar cita
+          {editCita.id ? "Editar Paciente" : "Agregar Paciente"}
         </button>
       </form>
     </Fragment>
